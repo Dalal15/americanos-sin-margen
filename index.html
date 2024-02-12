@@ -3,47 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Torneo de Padel - Rondas</title>
+<title>Americano sin Margen</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
   }
-  h2 {
-    margin-top: 20px;
+  h1, h2 {
+    text-align: center;
   }
-  .round {
+  h2.subtitle {
+    font-size: smaller;
+  }
+  h2.left {
+    text-align: left;
+  }
+  h2.center {
+    text-align: center;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
   }
-  .match {
-    margin-bottom: 10px;
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    width: 25%;
+  }
+  th {
+    background-color: #0066cc;
+    color: white;
+  }
+  .round {
+    margin-bottom: 30px;
+  }
+  .vs {
+    vertical-align: middle;
+    text-align: center;
+    background-color: #0066cc;
+    color: white;
+  }
+  #imageSection {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #imageSection img {
+    margin: 10px;
+    width: 200px; /* Adjust image width as needed */
+    height: 200px; /* Adjust image height as needed */
+    border-radius: 50%; /* Make the image circular */
+    border: 3px solid #0066cc; /* Add a border around the image */
+    cursor: pointer;
+  }
+  #winnerMessage {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
 </style>
 </head>
 <body>
-  <h1>Torneo de Padel - Rondas</h1>
+  <h1>Americano sin Margen</h1>
+  <h2 class="center subtitle">by Dalal y Cata</h2>
+  <h2 class="left">Lugar: Club Pato Cornejo</h2>
+  <h2 class="left">Hora: 19:30 hrs</h2>
 
   <div class="round">
-    <h2>Ronda 1:</h2>
-    <div class="match">Cancha 3: Barbi - Fernuchi vs Pau - Ale</div>
-    <div class="match">Cancha 4: Maya - Toya vs Pasqui - Fi</div>
-    <div class="match">Cancha 5: Dalal - Coni vs Cata - Ampi</div>
+    <h2 class="left">Ronda 1:</h2>
+    <table>
+      <tr>
+        <th>Cancha</th>
+        <th>Pareja 1</th>
+        <th class="vs" rowspan="4">VS</th>
+        <th>Pareja 2</th>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Barbi - Fernuchi</td>
+        <td>Pau - Ale</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Maya - Toya</td>
+        <td>Pasqui - Fi</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Dalal - Coni</td>
+        <td>Cata - Ampi</td>
+      </tr>
+    </table>
   </div>
 
   <div class="round">
-    <h2>Ronda 2:</h2>
-    <div class="match">Cancha 3: Barbi - Coni vs Ale - Fi</div>
-    <div class="match">Cancha 4: Pau - Pasqui vs Dalal - Cata</div>
-    <div class="match">Cancha 5: Maya Ampi - Fernuchi vs Toya</div>
+    <h2 class="left">Ronda 2:</h2>
+    <table>
+      <tr>
+        <th>Cancha</th>
+        <th>Pareja 1</th>
+        <th class="vs" rowspan="4">VS</th>
+        <th>Pareja 2</th>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Barbi - Coni</td>
+        <td>Ale - Fi</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Pau - Pasqui</td>
+        <td>Dalal - Cata</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Maya Ampi - Fernuchi</td>
+        <td>Toya</td>
+      </tr>
+    </table>
   </div>
 
   <div class="round">
-    <h2>Ronda 3:</h2>
-    <div class="match">Cancha 3: Barbi - Maya vs Dalal - Fi</div>
-    <div class="match">Cancha 4: Toya - Pau vs Cata - Pasqui</div>
-    <div class="match">Cancha 5: Ampi - Coni vs Fernuchi - Ale</div>
+    <h2 class="left">Ronda 3:</h2>
+    <table>
+      <tr>
+        <th>Cancha</th>
+        <th>Pareja 1</th>
+        <th class="vs" rowspan="4">VS</th>
+        <th>Pareja 2</th>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Barbi - Maya</td>
+        <td>Dalal - Fi</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Toya - Pau</td>
+        <td>Cata - Pasqui</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Ampi - Coni</td>
+        <td>Fernuchi - Ale</td>
+      </tr>
+    </table>
   </div>
 
+  <h2 class="center">Tendremos tremendas jugadoras</h2>
+  <div id="imageSection">
+    <img id="image" src="aleycata.JPG" alt="">
+  </div>
+  
+  <button id="selectButton">Escoge a una</button>
+
+  <div id="winnerMessage"></div>
+
+  <script>
+    var images = ["aleycata.JPG", "pau.jpg", "fi.JPG", "barbi.jpg"];
+    var intervalId;
+    var winnerMessage = document.getElementById("winnerMessage");
+    var image = document.getElementById("image");
+    var selectButton = document.getElementById("selectButton");
+
+    function changeImage() {
+      var randomIndex = Math.floor(Math.random() * images.length);
+      var randomImage = images[randomIndex];
+      image.src = randomImage;
+      image.alt = randomImage;
+    }
+
+    image.addEventListener("click", function() {
+      var winner = image.alt;
+      var winnerMessageText;
+      switch (winner) {
+        case "pau.jpg":
+          winnerMessageText = "Escogiste a la Pau Muralla Campusano";
+          break;
+        case "fi.JPG":
+          winnerMessageText = "Escogiste a la Filomena";
+          break;
+        case "aleycata.JPG":
+          winnerMessageText = "Escogiste a las partners S-H-IIIIIIIIIIII, SHI, L-E, LEEEEE";
+          break;
+        case "barbi.jpg":
+          winnerMessageText = "Escogiste a la Barbi Asesina";
+          break;
+        default:
+          winnerMessageText = "¡Felicidades por tu elección!";
+      }
+      winnerMessage.textContent = winnerMessageText;
+    });
+
+    selectButton.addEventListener("click", function() {
+      var winner = image.alt;
+      var winnerMessageText;
+      switch (winner) {
+        case "pau.jpg":
+          winnerMessageText = "Escogiste a la Pau Muralla Campusano";
+          break;
+        case "fi.JPG":
+          winnerMessageText = "Escogiste a la Filomena";
+          break;
+        case "aleycata.JPG":
+          winnerMessageText = "Escogiste a las partners S-H-IIIIIIIIIIII, SHI, L-E, LEEEEE";
+          break;
+        case "barbi.jpg":
+          winnerMessageText = "Escogiste a la Barbi Asesina";
+          break;
+        default:
+          winnerMessageText = "¡Felicidades por tu elección!";
+      }
+      winnerMessage.textContent = winnerMessageText;
+      clearInterval(intervalId);
+    });
+
+    changeImage(); // Initial image change
+    intervalId = setInterval(changeImage, 200); // Change image every 2 seconds
+  </script>
 </body>
 </html>
