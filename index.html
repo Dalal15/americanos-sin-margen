@@ -12,7 +12,7 @@
     background-color: #f4f4f4;
     color: #333;
   }
-  h1, h2 {
+  h1, h2, h3 {
     text-align: center;
   }
   h2.subtitle {
@@ -33,7 +33,7 @@
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-    width: 25%;
+    width: 20%;
   }
   th {
     background-color: #0066cc;
@@ -42,28 +42,12 @@
   .round {
     margin-bottom: 30px;
   }
-  .vs {
-    vertical-align: middle;
-    text-align: center;
-    background-color: #0066cc;
-    color: white;
-  }
-  #imageSection {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  #imageSection img {
-    margin: 10px;
-    width: 300px; /* Adjust image width as needed */
-    height: 300px; /* Adjust image height as needed */
-    border-radius: 50%; /* Make the image circular */
-    border: 3px solid #0066cc; /* Add a border around the image */
-    cursor: pointer;
-  }
-  #winnerMessage {
-    text-align: center;
-    font-size: 18px;
-    margin-top: 10px;
+  #voterName {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px;
+    font-size: 16px;
+    width: 50%;
   }
   button {
     display: block;
@@ -80,33 +64,43 @@
 </head>
 <body>
   <h1>Americano sin Margen</h1>
-  <h2 class="center subtitle">by Dalal y Cata</h2>
-  <h2 class="left">Lugar: Club Pato Cornejo</h2>
-  <h2 class="left">Hora: 19:30 hrs</h2>
+  <h2 class="center subtitle">By Dalal y Cata</h2>
+  <h3>Versión Apuestas</h3>
+
+  <!-- Input for voter's name -->
+  <input type="text" id="voterName" placeholder="Ingresa tu nombre" required />
 
   <div class="round">
     <h2 class="left">Ronda 1:</h2>
     <table>
       <tr>
-        <th>Cancha</th>
-        <th>Pareja 1</th>
-        <th class="vs" rowspan="4">VS</th>
-        <th>Pareja 2</th>
+        <th>Cancha</th> <!-- New column for court -->
+        <th>Match</th>
+        <th>Votos</th>
       </tr>
       <tr>
-        <td>3</td>
-        <td>Barbi - Fernuchi</td>
-        <td>Pau - Ale</td>
+        <td>Cancha 4</td> <!-- Court name -->
+        <td>Dalal Coni vs Toti Cote</td>
+        <td>
+          <label><input type="radio" name="match1" value="Dalal Coni"> Dalal Coni</label>
+          <label><input type="radio" name="match1" value="Toti Cote"> Toti Cote</label>
+        </td>
       </tr>
       <tr>
-        <td>4</td>
-        <td>Benja - Toya</td>
-        <td>Pasqui - Fi</td>
+        <td>Cancha 6</td> <!-- Court name -->
+        <td>Flo Fi vs Toya Nieto</td>
+        <td>
+          <label><input type="radio" name="match2" value="Flo Fi">Flo Fi</label>
+          <label><input type="radio" name="match2" value="Toya Nieto">Toya Nieto</label>
+        </td>
       </tr>
       <tr>
-        <td>5</td>
-        <td>Dalal - Coni</td>
-        <td>Cata - Ampi</td>
+        <td>Cancha 8</td> <!-- Court name -->
+        <td>Barbi Brenda vs Nata Cata</td>
+        <td>
+          <label><input type="radio" name="match3" value="Barbi Brenda">Barbi Brenda</label>
+          <label><input type="radio" name="match3" value="Nata Cata">Nata Cata</label>
+        </td>
       </tr>
     </table>
   </div>
@@ -115,25 +109,33 @@
     <h2 class="left">Ronda 2:</h2>
     <table>
       <tr>
-        <th>Cancha</th>
-        <th>Pareja 1</th>
-        <th class="vs" rowspan="4">VS</th>
-        <th>Pareja 2</th>
+        <th>Cancha</th> <!-- New column for court -->
+        <th>Match</th>
+        <th>Votos</th>
       </tr>
       <tr>
-        <td>3</td>
-        <td>Barbi - Coni</td>
-        <td>Ale - Fi</td>
+        <td>Cancha 4</td> <!-- Court name -->
+        <td>Dalal Nieto vs Cata Flo</td>
+        <td>
+          <label><input type="radio" name="match4" value="Dalal Nieto"> Dalal Nieto</label>
+          <label><input type="radio" name="match4" value="Cata Flo"> Cata Flo</label>
+        </td>
       </tr>
       <tr>
-        <td>4</td>
-        <td>Pau - Pasqui</td>
-        <td>Dalal - Cata</td>
+        <td>Cancha 6</td> <!-- Court name -->
+        <td>Nata Fi vs Barbi Coni</td>
+        <td>
+          <label><input type="radio" name="match5" value="Nata Fi">Nata Fi</label>
+          <label><input type="radio" name="match5" value="Barbi Coni">Barbi Coni</label>
+        </td>
       </tr>
       <tr>
-        <td>5</td>
-        <td>Benja - Ampi </td>
-        <td>Fernuchi - Toya</td>
+        <td>Cancha 8</td> <!-- Court name -->
+        <td>Toya Toti vs Brenda Cote</td>
+        <td>
+          <label><input type="radio" name="match6" value="Toya Toti">Toya Toti</label>
+          <label><input type="radio" name="match6" value="Brenda Cote">Brenda Cote</label>
+        </td>
       </tr>
     </table>
   </div>
@@ -142,104 +144,82 @@
     <h2 class="left">Ronda 3:</h2>
     <table>
       <tr>
-        <th>Cancha</th>
-        <th>Pareja 1</th>
-        <th class="vs" rowspan="4">VS</th>
-        <th>Pareja 2</th>
+        <th>Cancha</th> <!-- New column for court -->
+        <th>Match</th>
+        <th>Votos</th>
       </tr>
       <tr>
-        <td>3</td>
-        <td>Barbi - Benja</td>
-        <td>Dalal - Fi</td>
+        <td>Cancha 4</td> <!-- Court name -->
+        <td>Barbi Cata vs Nata Toti</td>
+        <td>
+          <label><input type="radio" name="match7" value="Barbi Cata"> Barbi Cata</label>
+          <label><input type="radio" name="match7" value="Nata Toti"> Nata Toti</label>
+        </td>
       </tr>
       <tr>
-        <td>4</td>
-        <td>Toya - Pau</td>
-        <td>Cata - Pasqui</td>
+        <td>Cancha 6</td> <!-- Court name -->
+        <td>Cote Coni vs Flo Nieto</td>
+        <td>
+          <label><input type="radio" name="match8" value="Cote Coni">Cote Coni</label>
+          <label><input type="radio" name="match8" value="Flo Nieto">Flo Nieto</label>
+        </td>
       </tr>
       <tr>
-        <td>5</td>
-        <td>Ampi - Coni</td>
-        <td>Fernuchi - Ale</td>
+        <td>Cancha 8</td> <!-- Court name -->
+        <td>Dalal Fi vs Brenda Toya</td>
+        <td>
+          <label><input type="radio" name="match9" value="Dalal Fi">Dalal Fi</label>
+          <label><input type="radio" name="match9" value="Brenda Toya">Brenda Toya</label>
+        </td>
       </tr>
     </table>
   </div>
 
-  <h2 class="center">Tendremos tremendas jugadoras</h2>
-  <div id="imageSection">
-    <img id="image" src="aleycata.JPG" alt="">
-  </div>
-  
-  <button id="selectButton">Escoge a una</button>
-
-  <div id="winnerMessage"></div>
-
-  <audio id="benjaAudio" src="benja.m4a"></audio>
+  <button id="submitVoteButton">Votar</button>
 
   <script>
-    var images = ["aleycata.JPG", "pau.jpg", "fi.JPG", "benja.jpg"];
-    var intervalId;
-    var winnerMessage = document.getElementById("winnerMessage");
-    var image = document.getElementById("image");
-    var selectButton = document.getElementById("selectButton");
-    var benjaAudio = document.getElementById("benjaAudio");
+    document.getElementById("submitVoteButton").addEventListener("click", function() {
+      const voterName = document.getElementById("voterName").value.trim();
+      const votes = {
+        name: voterName,
+        match1: document.querySelector('input[name="match1"]:checked')?.value,
+        match2: document.querySelector('input[name="match2"]:checked')?.value,
+        match3: document.querySelector('input[name="match3"]:checked')?.value,
+        match4: document.querySelector('input[name="match4"]:checked')?.value,
+        match5: document.querySelector('input[name="match5"]:checked')?.value,
+        match6: document.querySelector('input[name="match6"]:checked')?.value,
+        match7: document.querySelector('input[name="match7"]:checked')?.value,
+        match8: document.querySelector('input[name="match8"]:checked')?.value,
+        match9: document.querySelector('input[name="match9"]:checked')?.value,
+      };
 
-    function changeImage() {
-      var randomIndex = Math.floor(Math.random() * images.length);
-      var randomImage = images[randomIndex];
-      image.src = randomImage;
-      image.alt = randomImage;
-    }
-
-    image.addEventListener("click", function() {
-      var winner = image.alt;
-      var winnerMessageText;
-      switch (winner) {
-        case "pau.jpg":
-          winnerMessageText = "Escogiste a la Pau Muralla Campusano";
-          break;
-        case "fi.JPG":
-          winnerMessageText = "Escogiste a la Filomena";
-          break;
-        case "aleycata.JPG":
-          winnerMessageText = "Escogiste a las partners S-H-IIIIIIIIIIII, SHI, L-E, LEEEEE";
-          break;
-        case "benja.jpg":
-          winnerMessageText = "Escogiste a Benja";
-          benjaAudio.play(); // Play the audio when Benja is selected
-          break;
-        default:
-          winnerMessageText = "¡Felicidades por tu elección!";
+      // Validate that the name and all votes are provided
+      if (!voterName) {
+        alert("Ingresa tu nombre po");
+        return;
       }
-      winnerMessage.textContent = winnerMessageText;
-    });
-
-    selectButton.addEventListener("click", function() {
-      var winner = image.alt;
-      var winnerMessageText;
-      switch (winner) {
-        case "pau.jpg":
-          winnerMessageText = "Escogiste a la Pau Muralla Campusano";
-          break;
-        case "fi.JPG":
-          winnerMessageText = "Escogiste a la Filomena";
-          break;
-        case "aleycata.JPG":
-          winnerMessageText = "Escogiste a las partners S-H-IIIIIIIIIIII, SHI, L-E, LEEEEE";
-          break;
-        case "benja.jpg":
-          winnerMessageText = "Escogiste a Benja, espera un segundo para escuchar su mensaje";
-          benjaAudio.play(); // Play the audio when Benja is selected
-          break;
-        default:
-          winnerMessageText = "¡Felicidades por tu elección!";
+      if (Object.values(votes).some(vote => vote === undefined)) {
+        alert("Te faltan partidos por votar");
+        return;
       }
-      winnerMessage.textContent = winnerMessageText;
-      clearInterval(intervalId);
-    });
 
-    changeImage(); // Initial image change
-    intervalId = setInterval(changeImage, 500); // Change image every 2 seconds
+      // Send votes to Google Sheets
+      fetch("https://script.google.com/macros/s/AKfycbx025trGaEMFhbkVtTIaDfb652XoiU22ycbEWTWkVhyUa7ykV5Z9__rIp6wZT6st3d2ig/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(votes),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          alert("Thanks for voting!");
+        } else {
+          alert("There was an issue submitting your vote. Please try again.");
+        }
+      })
+      .catch(error => alert("Gracias por votar!"));
+    });
   </script>
 </body>
 </html>
