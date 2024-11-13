@@ -49,6 +49,23 @@
     font-size: 16px;
     width: 50%;
   }
+  #imageSection {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #imageSection img {
+    margin: 10px;
+    width: 300px; /* Adjust image width as needed */
+    height: 300px; /* Adjust image height as needed */
+    border-radius: 50%; /* Make the image circular */
+    border: 3px solid #0066cc; /* Add a border around the image */
+    cursor: pointer;
+  }
+  #winnerMessage {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+  }
   button {
     display: block;
     margin: 0 auto;
@@ -220,6 +237,88 @@
       })
       .catch(error => alert("Gracias por votar!"));
     });
+  </script>
+  <h2 class="center">Tendremos tremendas jugadoras</h2>
+  <div id="imageSection">
+    <img id="image" src="aleycata.JPG" alt="">
+  </div>
+  
+  <button id="selectButton">Escoge a una</button>
+
+  <div id="winnerMessage"></div>
+
+  <audio id="FiAudio" src="miau-triste.mp3"></audio>
+
+  <script>
+    var images = ["cata.jpg", "nieto.jpg", "fi.JPG", "barbi.jpg", "flo.jpg"];
+    var intervalId;
+    var winnerMessage = document.getElementById("winnerMessage");
+    var image = document.getElementById("image");
+    var selectButton = document.getElementById("selectButton");
+    var FiAudio = document.getElementById("FiAudio");
+
+    function changeImage() {
+      var randomIndex = Math.floor(Math.random() * images.length);
+      var randomImage = images[randomIndex];
+      image.src = randomImage;
+      image.alt = randomImage;
+    }
+
+    image.addEventListener("click", function() {
+      var winner = image.alt;
+      var winnerMessageText;
+      switch (winner) {
+        case "nieto.jpg":
+          winnerMessageText = "Escogiste a Danielinha Nietinha";
+          break;
+        case "fi.JPG":
+          winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
+          FiAudio.play(); // Play the audio when Benja is selected
+          break;
+        case "cata.jpg":
+          winnerMessageText = "Escogiste a la Cata, la más linda <3";
+          break;
+        case "flo.jpg":
+          winnerMessageText = "Escogiste a la Flo, jugadora con mucha paciencia según la foto...";
+          break;
+        case "barbi.jpg":
+          winnerMessageText = "Escogiste a la Barbi, la que deja tatuajes sin ser tatuadora";
+          break;
+        default:
+          winnerMessageText = "¡Felicidades por tu elección!";
+      }
+      winnerMessage.textContent = winnerMessageText;
+    });
+
+    selectButton.addEventListener("click", function() {
+      var winner = image.alt;
+      var winnerMessageText;
+      switch (winner) {
+        case "nieto.jpg":
+          winnerMessageText = "Escogiste a Danielinha Nietinha";
+          break;
+        case "fi.JPG":
+          winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
+          FiAudio.play(); // Play the audio when Benja is selected
+          break;
+        case "cata.jpg":
+          winnerMessageText = "Escogiste a la Cata, la más linda <3";
+          break;
+        case "flo.jpg":
+          winnerMessageText = "Escogiste a la Flo, jugadora con mucha paciencia según la foto...";
+          break;
+        case "barbi.jpg":
+          winnerMessageText = "Escogiste a la Barbi, la que deja tatuajes sin ser tatuadora";
+          break;
+        default:
+          winnerMessageText = "¡Felicidades por tu elección!";
+      }
+      winnerMessage.textContent = winnerMessageText;
+      clearInterval(intervalId);
+    });
+
+    changeImage(); // Initial image change
+    intervalId = setInterval(changeImage, 500); // Change image every 2 seconds
   </script>
 </body>
 </html>
