@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Americano sin Margen</title>
@@ -77,14 +78,69 @@
     border-radius: 5px;
     cursor: pointer;
   }
+  .chart-container {
+  width: 300px;  /* Set width as desired */
+  height: 200px; /* Set height as desired */
+  margin: 0 auto; /* Center the chart */
+  position: relative;
+}
+
+canvas {
+  width: 100% !important;  /* Force canvas to fill the container */
+  height: 100% !important;
+}
+
+.fi-coin-info {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.fi-coin-info br {
+    margin-bottom: 10px;
+}
+
+.fi-coin-challenges {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.fi-coin-challenges li {
+    margin-bottom: 5px;
+    color: #555;
+}
 </style>
 </head>
 <body>
   <h1>Americano sin Margen</h1>
   <h2 class="center subtitle">By Dalal y Cata</h2>
-  <h3>Versión Apuestas</h3>
+  <h3>Despedida Fi</h3>
+  <p class="fi-coin-info">
+    Esta vez además de jugar padel y despedirnos de la Fi, seremos parte del lanzamiento de una nueva "criptomoneda" llamada "Fi-Coin". 
+    Si bien ni siquiera en HSBC conocen de su existencia, se dice que es una moneda tan vólatil como la bandeja de la Fi, pero no te preocupes, 
+    esta cripto no se puede comprar con dinero, sino que se gana.
 
-  <!-- Input for voter's name -->
+    <br>
+    La cosa es simple, cada partido que votes y aciertes, recibirás 1 Fi-Coin. Si aciertas a todos los partidos, ganarás 10 Fi-Coins.
+
+    <br>Además, habrán desafíos en las que podrás ganar hasta 5 Fi-Coin. Contamos con los siguientes desafíos que sólo podran ser cobrados una vez:
+    <ul class="fi-coin-challenges">
+      <li>Sacarla por 4 - 5 Fi-Coin</li>
+      <li>Sacarla por 3 - 5 Fi-Coin</li>
+      <li>Sacarla por la puerta - 10 Fi-Coin</li>
+      <li>Sacarla de globo - 10 Fi-Coin</li>
+      <li>Pelotazo a la Fi - 1 Fi-Coin para cada jugadora (exceptuando a la Fi)</li>  
+    </ul>
+
+   Podrás canjear tus Fi-Coin por premios, los cuales serán anunciados al finalizar el torneo.
+    <br>
+    <br>
+    <br>
+    
+  </p>
+
   <input type="text" id="voterName" placeholder="Ingresa tu nombre" required />
 
   <div class="round">
@@ -96,27 +152,27 @@
         <th>Votos</th>
       </tr>
       <tr>
+        <td>Cancha 2</td> <!-- Court name -->
+        <td>Dalal Coni H vs Coni Y Pau</td>
+        <td>
+          <label><input type="radio" name="match1" value="Dalal Coni H"> Dalal Coni H</label>
+          <label><input type="radio" name="match1" value="Coni Y Pau"> Coni Y Pau</label>
+        </td>
+      </tr>
+      <tr>
+        <td>Cancha 3</td> <!-- Court name -->
+        <td>Flo Toti vs Barbi Fi</td>
+        <td>
+          <label><input type="radio" name="match2" value="Flo Toti">Flo Toti</label>
+          <label><input type="radio" name="match2" value="Barbi Fi">Barbi Fi</label>
+        </td>
+      </tr>
+      <tr>
         <td>Cancha 4</td> <!-- Court name -->
-        <td>Dalal Coni vs Toti Cote</td>
+        <td>Fernuchi Cata vs Toya Ale</td>
         <td>
-          <label><input type="radio" name="match1" value="Dalal Coni"> Dalal Coni</label>
-          <label><input type="radio" name="match1" value="Toti Cote"> Toti Cote</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 6</td> <!-- Court name -->
-        <td>Flo Fi vs Toya Nieto</td>
-        <td>
-          <label><input type="radio" name="match2" value="Flo Fi">Flo Fi</label>
-          <label><input type="radio" name="match2" value="Toya Nieto">Toya Nieto</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 8</td> <!-- Court name -->
-        <td>Barbi Brenda vs Nata Cata</td>
-        <td>
-          <label><input type="radio" name="match3" value="Barbi Brenda">Barbi Brenda</label>
-          <label><input type="radio" name="match3" value="Nata Cata">Nata Cata</label>
+          <label><input type="radio" name="match3" value="Fernuchi Cata">Fernuchi Cata</label>
+          <label><input type="radio" name="match3" value="Toya Ale">Toya Ale</label>
         </td>
       </tr>
     </table>
@@ -131,27 +187,27 @@
         <th>Votos</th>
       </tr>
       <tr>
+        <td>Cancha 2</td> <!-- Court name -->
+        <td>Coni H Fi vs Ale Fernuchi</td>
+        <td>
+          <label><input type="radio" name="match4" value="Coni H Fi"> Coni H Fi</label>
+          <label><input type="radio" name="match4" value="Ale Fernuchi"> Ale Fernuchi</label>
+        </td>
+      </tr>
+      <tr>
+        <td>Cancha 3</td> <!-- Court name -->
+        <td>Barbi Pau vs Coni Y Toya</td>
+        <td>
+          <label><input type="radio" name="match5" value="Barbi Pau">Barbi Pau</label>
+          <label><input type="radio" name="match5" value="Coni Y Toya">Coni Y Toya</label>
+        </td>
+      </tr>
+      <tr>
         <td>Cancha 4</td> <!-- Court name -->
-        <td>Dalal Nieto vs Cata Flo</td>
+        <td>Dalal Toti vs Flo Cata</td>
         <td>
-          <label><input type="radio" name="match4" value="Dalal Nieto"> Dalal Nieto</label>
-          <label><input type="radio" name="match4" value="Cata Flo"> Cata Flo</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 6</td> <!-- Court name -->
-        <td>Nata Fi vs Barbi Coni</td>
-        <td>
-          <label><input type="radio" name="match5" value="Nata Fi">Nata Fi</label>
-          <label><input type="radio" name="match5" value="Barbi Coni">Barbi Coni</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 8</td> <!-- Court name -->
-        <td>Toya Toti vs Brenda Cote</td>
-        <td>
-          <label><input type="radio" name="match6" value="Toya Toti">Toya Toti</label>
-          <label><input type="radio" name="match6" value="Brenda Cote">Brenda Cote</label>
+          <label><input type="radio" name="match6" value="Dalal Toti">Dalal Toti</label>
+          <label><input type="radio" name="match6" value="Flo Cata">Flo Cata</label>
         </td>
       </tr>
     </table>
@@ -166,27 +222,27 @@
         <th>Votos</th>
       </tr>
       <tr>
+        <td>Cancha 2</td> <!-- Court name -->
+        <td>Barbi Ale vs Toya Pau</td>
+        <td>
+          <label><input type="radio" name="match7" value="Barbi Ale"> Barbi Ale</label>
+          <label><input type="radio" name="match7" value="Toya Pau"> Toya Pau</label>
+        </td>
+      </tr>
+      <tr>
+        <td>Cancha 3</td> <!-- Court name -->
+        <td>Dalal Cata vs Coni Y Fi</td>
+        <td>
+          <label><input type="radio" name="match8" value="Dalal Cata">Dalal Cata</label>
+          <label><input type="radio" name="match8" value="Coni Y Fi">Coni Y Fi</label>
+        </td>
+      </tr>
+      <tr>
         <td>Cancha 4</td> <!-- Court name -->
-        <td>Barbi Cata vs Nata Toti</td>
+        <td>Flo Coni H vs Fernuchi Toti</td>
         <td>
-          <label><input type="radio" name="match7" value="Barbi Cata"> Barbi Cata</label>
-          <label><input type="radio" name="match7" value="Nata Toti"> Nata Toti</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 6</td> <!-- Court name -->
-        <td>Cote Coni vs Flo Nieto</td>
-        <td>
-          <label><input type="radio" name="match8" value="Cote Coni">Cote Coni</label>
-          <label><input type="radio" name="match8" value="Flo Nieto">Flo Nieto</label>
-        </td>
-      </tr>
-      <tr>
-        <td>Cancha 8</td> <!-- Court name -->
-        <td>Dalal Fi vs Brenda Toya</td>
-        <td>
-          <label><input type="radio" name="match9" value="Dalal Fi">Dalal Fi</label>
-          <label><input type="radio" name="match9" value="Brenda Toya">Brenda Toya</label>
+          <label><input type="radio" name="match9" value="Flo Coni H">Flo Coni H</label>
+          <label><input type="radio" name="match9" value="Fernuchi Toti">Fernuchi Toti</label>
         </td>
       </tr>
     </table>
@@ -268,9 +324,6 @@
       var winner = image.alt;
       var winnerMessageText;
       switch (winner) {
-        case "nieto.jpg":
-          winnerMessageText = "Escogiste a Danielinha Nietinha";
-          break;
         case "fi.JPG":
           winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
           FiAudio.play(); // Play the audio when Benja is selected
@@ -294,9 +347,6 @@
       var winner = image.alt;
       var winnerMessageText;
       switch (winner) {
-        case "nieto.jpg":
-          winnerMessageText = "Escogiste a Danielinha Nietinha";
-          break;
         case "fi.JPG":
           winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
           FiAudio.play(); // Play the audio when Benja is selected
@@ -320,5 +370,6 @@
     changeImage(); // Initial image change
     intervalId = setInterval(changeImage, 500); // Change image every 2 seconds
   </script>
+
 </body>
 </html>
