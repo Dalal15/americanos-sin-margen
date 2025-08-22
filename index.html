@@ -1,385 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Americano sin Margen</title>
+<title>Americano M3 & Friends</title>
 <style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+  :root{
+    --m3:#0d2849;
+    --accent:#ffd400;
+    --bg:#f6f8fb;
   }
-  h1, h2, h3 {
-    text-align: center;
-  }
-  h2.subtitle {
-    font-size: smaller;
-  }
-  h2.left {
-    text-align: left;
-  }
-  h2.center {
-    text-align: center;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    width: 20%;
-  }
-  th {
-    background-color: #0066cc;
-    color: white;
-  }
-  .round {
-    margin-bottom: 30px;
-  }
-  #voterName {
-    display: block;
-    margin: 0 auto 20px;
-    padding: 10px;
-    font-size: 16px;
-    width: 50%;
-  }
-  #imageSection {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  #imageSection img {
-    margin: 10px;
-    width: 300px; /* Adjust image width as needed */
-    height: 300px; /* Adjust image height as needed */
-    border-radius: 50%; /* Make the image circular */
-    border: 3px solid #0066cc; /* Add a border around the image */
-    cursor: pointer;
-  }
-  #winnerMessage {
-    text-align: center;
-    font-size: 18px;
-    margin-top: 10px;
-  }
-  button {
-    display: block;
-    margin: 0 auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .chart-container {
-  width: 300px;  /* Set width as desired */
-  height: 200px; /* Set height as desired */
-  margin: 0 auto; /* Center the chart */
-  position: relative;
-}
-
-canvas {
-  width: 100% !important;  /* Force canvas to fill the container */
-  height: 100% !important;
-}
-
-.fi-coin-info {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.fi-coin-info br {
-    margin-bottom: 10px;
-}
-
-.fi-coin-challenges {
-    list-style-type: disc;
-    margin-left: 20px;
-    padding-left: 0;
-}
-
-.fi-coin-challenges li {
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.small-image {
-    width: 100px; /* Adjust the width as needed */
-    height: 100px; /* Set the height equal to the width for a perfect circle */
-    border-radius: 50%; /* Makes the image circular */
-    object-fit: cover; /* Ensures the image covers the entire area */
-}
+  body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:24px; background:var(--bg); color:#1f2d3d;}
+  header{display:flex; align-items:center; gap:16px; justify-content:center; margin-bottom:16px;}
+  header img{height:56px;}
+  h1{margin:0; font-size:28px; color:var(--m3); letter-spacing:.5px;}
+  .tag{display:inline-block; margin-top:6px; padding:4px 10px; background:var(--m3); color:white; border-radius:999px; font-size:12px;}
+  .intro{max-width:900px; margin:12px auto 24px; text-align:center; font-size:16px;}
+  table{width:100%; border-collapse:collapse; margin:24px 0; background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.06)}
+  th, td{padding:10px 12px; border-bottom:1px solid #eef2f7; text-align:left;}
+  th{background:var(--m3); color:white; text-transform:uppercase; font-size:12px; letter-spacing:.08em;}
+  tr:last-child td{border-bottom:none;}
+  .round{margin:28px auto; max-width:1100px;}
+  .round h2{color:var(--m3); font-size:20px; margin:6px 0 8px;}
+  #voterName{display:block; margin:0 auto; padding:10px 14px; font-size:16px; width:min(420px,90%); border:1px solid #ced7e0; border-radius:8px; background:white;}
+  button{display:block; margin:18px auto; padding:12px 18px; font-size:16px; background:var(--m3); color:white; border:none; border-radius:8px; cursor:pointer;}
+  button:hover{filter:brightness(1.05);}
+  .match-label{display:flex; gap:16px; align-items:center;}
+  .court{font-weight:600; color:#445; min-width:85px;}
+  .time{font-family:monospace; background:#edf2ff; padding:2px 6px; border-radius:6px; border:1px solid #d9e3ff;}
 </style>
 </head>
 <body>
-  <h1>Americano sin Margen</h1>
-  <h2 class="center subtitle">By Dalal y Cata</h2>
-  <h3>Despedida Fi</h3>
-  <p class="fi-coin-info">
-    Esta vez además de jugar padel y despedirnos de la Fi, seremos parte del lanzamiento de una nueva "criptomoneda" llamada "Fi-Coin". 
-    <br>Si bien ni siquiera en HSBC conocen de su existencia, se dice que es una moneda tan vólatil como la bandeja de la Fi. 
-    <br>Pero no te preocupes, esta cripto no se puede comprar con dinero, sino que se gana.
-    <br>
-    <br>
-    <img src="ficoin.png" alt="Fi-Coin" class="small-image">
-    <br>
-    <br>
-    La cosa es simple, cada partido que votes y aciertes, recibirás 1 Fi-Coin. Si aciertas a todos los partidos, ganarás 10 Fi-Coins.
+  <header>
+    <img src="m3-logo.png" alt="M3 Logo">
+    <div>
+      <h1>Americano M3 & Friends</h1>
+      <div class="tag">Bienvenid@s y que gane la mejor ⚡</div>
+    </div>
+  </header>
 
-    <br>Además, habrán desafíos en las que podrás ganar hasta 10 Fi-Coins. Contamos con los siguientes desafíos que sólo podran ser cobrados una vez:
-    <ul class="fi-coin-challenges">
-      <li>Sacarla por 4 - 5 Fi-Coin</li>
-      <li>Sacarla por 3 - 5 Fi-Coin</li>
-      <li>Sacarla por la puerta - 10 Fi-Coin</li>
-      <li>Sacarla de globo - 10 Fi-Coin</li>
-      <li>Pelotazo a la Fi - 1 Fi-Coin para cada jugadora (exceptuando a la Fi)</li>  
-    </ul>
-
-   Podrás canjear tus Fi-Coin por premios, los cuales serán anunciados al finalizar el torneo.
-    <br>
-    <br>
-    <br>
-    
+  <p class="intro">
+    Vota quién gana en cada partido. Si te equivocas, nadie se entera; si aciertas, lo gritamos 😉.
+    Escribe tu nombre, selecciona tus ganadoras y envía tu voto.
   </p>
 
   <input type="text" id="voterName" placeholder="Ingresa tu nombre" required />
 
+  <!-- Franja 1 -->
   <div class="round">
-    <h2 class="left">Ronda 1:</h2>
+    <h2>Franja 18:05-18:30</h2>
     <table>
+      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
+
       <tr>
-        <th>Cancha</th> <!-- New column for court -->
-        <th>Match</th>
-        <th>Votos</th>
-      </tr>
-      <tr>
-        <td>Cancha 2</td> <!-- Court name -->
-        <td>Dalal Coni H vs Coni Y Pau</td>
+        <td class="court">Cancha 1</td>
+        <td><span class="time">18:05-18:30</span> — Coni Dalal <strong>vs</strong> Isa Dani Torres</td>
         <td>
-          <label><input type="radio" name="match1" value="Dalal Coni H"> Dalal Coni H</label>
-          <label><input type="radio" name="match1" value="Coni Y Pau"> Coni Y Pau</label>
+          <label class="match-label"><input type="radio" name="match1" value="Coni Dalal"> Coni Dalal</label>
+          <label class="match-label"><input type="radio" name="match1" value="Isa Dani Torres"> Isa Dani Torres</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 3</td> <!-- Court name -->
-        <td>Flo Toti vs Barbi Fi</td>
+        <td class="court">Cancha 2</td>
+        <td><span class="time">18:05-18:30</span> — Vale H Isi <strong>vs</strong> Cata Flo</td>
         <td>
-          <label><input type="radio" name="match2" value="Flo Toti">Flo Toti</label>
-          <label><input type="radio" name="match2" value="Barbi Fi">Barbi Fi</label>
+          <label class="match-label"><input type="radio" name="match2" value="Vale H Isi"> Vale H Isi</label>
+          <label class="match-label"><input type="radio" name="match2" value="Cata Flo"> Cata Flo</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 4</td> <!-- Court name -->
-        <td>Fernuchi Cata vs Toya Ale</td>
+        <td class="court">Cancha 3</td>
+        <td><span class="time">18:05-18:30</span> — Nata Fi <strong>vs</strong> Pia Mañi</td>
         <td>
-          <label><input type="radio" name="match3" value="Fernuchi Cata">Fernuchi Cata</label>
-          <label><input type="radio" name="match3" value="Toya Ale">Toya Ale</label>
+          <label class="match-label"><input type="radio" name="match3" value="Nata Fi"> Nata Fi</label>
+          <label class="match-label"><input type="radio" name="match3" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
     </table>
   </div>
 
+  <!-- Franja 2 -->
   <div class="round">
-    <h2 class="left">Ronda 2:</h2>
+    <h2>Franja 18:35 - 19:00</h2>
     <table>
+      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
+
       <tr>
-        <th>Cancha</th> <!-- New column for court -->
-        <th>Match</th>
-        <th>Votos</th>
-      </tr>
-      <tr>
-        <td>Cancha 2</td> <!-- Court name -->
-        <td>Coni H Fi vs Ale Fernuchi</td>
+        <td class="court">Cancha 1</td>
+        <td><span class="time">18:35 - 19:00</span> — Coni Dalal <strong>vs</strong> Vale H Isi</td>
         <td>
-          <label><input type="radio" name="match4" value="Coni H Fi"> Coni H Fi</label>
-          <label><input type="radio" name="match4" value="Ale Fernuchi"> Ale Fernuchi</label>
+          <label class="match-label"><input type="radio" name="match4" value="Coni Dalal"> Coni Dalal</label>
+          <label class="match-label"><input type="radio" name="match4" value="Vale H Isi"> Vale H Isi</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 3</td> <!-- Court name -->
-        <td>Barbi Pau vs Coni Y Toya</td>
+        <td class="court">Cancha 2</td>
+        <td><span class="time">18:35 - 19:00</span> — Isa Dani Torres <strong>vs</strong> Pia Mañi</td>
         <td>
-          <label><input type="radio" name="match5" value="Barbi Pau">Barbi Pau</label>
-          <label><input type="radio" name="match5" value="Coni Y Toya">Coni Y Toya</label>
+          <label class="match-label"><input type="radio" name="match5" value="Isa Dani Torres"> Isa Dani Torres</label>
+          <label class="match-label"><input type="radio" name="match5" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 4</td> <!-- Court name -->
-        <td>Dalal Toti vs Flo Cata</td>
+        <td class="court">Cancha 3</td>
+        <td><span class="time">18:35 - 19:00</span> — Cata Flo <strong>vs</strong> Nata Fi</td>
         <td>
-          <label><input type="radio" name="match6" value="Dalal Toti">Dalal Toti</label>
-          <label><input type="radio" name="match6" value="Flo Cata">Flo Cata</label>
+          <label class="match-label"><input type="radio" name="match6" value="Cata Flo"> Cata Flo</label>
+          <label class="match-label"><input type="radio" name="match6" value="Nata Fi"> Nata Fi</label>
         </td>
       </tr>
     </table>
   </div>
 
+  <!-- Franja 3 -->
   <div class="round">
-    <h2 class="left">Ronda 3:</h2>
+    <h2>Franja 19:05 - 19:30</h2>
     <table>
+      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
+
       <tr>
-        <th>Cancha</th> <!-- New column for court -->
-        <th>Match</th>
-        <th>Votos</th>
-      </tr>
-      <tr>
-        <td>Cancha 2</td> <!-- Court name -->
-        <td>Barbi Ale vs Toya Pau</td>
+        <td class="court">Cancha 1</td>
+        <td><span class="time">19:05 - 19:30</span> — Coni Dalal <strong>vs</strong> Cata Flo</td>
         <td>
-          <label><input type="radio" name="match7" value="Barbi Ale"> Barbi Ale</label>
-          <label><input type="radio" name="match7" value="Toya Pau"> Toya Pau</label>
+          <label class="match-label"><input type="radio" name="match7" value="Coni Dalal"> Coni Dalal</label>
+          <label class="match-label"><input type="radio" name="match7" value="Cata Flo"> Cata Flo</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 3</td> <!-- Court name -->
-        <td>Dalal Cata vs Coni Y Fi</td>
+        <td class="court">Cancha 2</td>
+        <td><span class="time">19:05 - 19:30</span> — Isa Dani Torres <strong>vs</strong> Nata Fi</td>
         <td>
-          <label><input type="radio" name="match8" value="Dalal Cata">Dalal Cata</label>
-          <label><input type="radio" name="match8" value="Coni Y Fi">Coni Y Fi</label>
+          <label class="match-label"><input type="radio" name="match8" value="Isa Dani Torres"> Isa Dani Torres</label>
+          <label class="match-label"><input type="radio" name="match8" value="Nata Fi"> Nata Fi</label>
         </td>
       </tr>
+
       <tr>
-        <td>Cancha 4</td> <!-- Court name -->
-        <td>Flo Coni H vs Fernuchi Toti</td>
+        <td class="court">Cancha 3</td>
+        <td><span class="time">19:05 - 19:30</span> — Vale H Isi <strong>vs</strong> Pia Mañi</td>
         <td>
-          <label><input type="radio" name="match9" value="Flo Coni H">Flo Coni H</label>
-          <label><input type="radio" name="match9" value="Fernuchi Toti">Fernuchi Toti</label>
+          <label class="match-label"><input type="radio" name="match9" value="Vale H Isi"> Vale H Isi</label>
+          <label class="match-label"><input type="radio" name="match9" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
     </table>
   </div>
 
-  <button id="submitVoteButton">Votar</button>
+  <!-- Franja 4 -->
+  <div class="round">
+    <h2>Franja 19:35 - 20:00</h2>
+    <table>
+      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
+
+      <tr>
+        <td class="court">Cancha 1</td>
+        <td><span class="time">19:35 - 20:00</span> — Coni Dalal <strong>vs</strong> Nata Fi</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match10" value="Coni Dalal"> Coni Dalal</label>
+          <label class="match-label"><input type="radio" name="match10" value="Nata Fi"> Nata Fi</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="court">Cancha 2</td>
+        <td><span class="time">19:35 - 20:00</span> — Isa Dani Torres <strong>vs</strong> Vale H Isi</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match11" value="Isa Dani Torres"> Isa Dani Torres</label>
+          <label class="match-label"><input type="radio" name="match11" value="Vale H Isi"> Vale H Isi</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="court">Cancha 3</td>
+        <td><span class="time">19:35 - 20:00</span> — Cata Flo <strong>vs</strong> Pia Mañi</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match12" value="Cata Flo"> Cata Flo</label>
+          <label class="match-label"><input type="radio" name="match12" value="Pia Mañi"> Pia Mañi</label>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Franja 5 -->
+  <div class="round">
+    <h2>Franja 20:05 - 20:30</h2>
+    <table>
+      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
+
+      <tr>
+        <td class="court">Cancha 1</td>
+        <td><span class="time">20:05 - 20:30</span> — Coni Dalal <strong>vs</strong> Pia Mañi</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match13" value="Coni Dalal"> Coni Dalal</label>
+          <label class="match-label"><input type="radio" name="match13" value="Pia Mañi"> Pia Mañi</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="court">Cancha 2</td>
+        <td><span class="time">20:05 - 20:30</span> — Isa Dani Torres <strong>vs</strong> Cata Flo</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match14" value="Isa Dani Torres"> Isa Dani Torres</label>
+          <label class="match-label"><input type="radio" name="match14" value="Cata Flo"> Cata Flo</label>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="court">Cancha 3</td>
+        <td><span class="time">20:05 - 20:30</span> — Vale H Isi <strong>vs</strong> Nata Fi</td>
+        <td>
+          <label class="match-label"><input type="radio" name="match15" value="Vale H Isi"> Vale H Isi</label>
+          <label class="match-label"><input type="radio" name="match15" value="Nata Fi"> Nata Fi</label>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <button id="submitVoteButton">Enviar votos</button>
 
   <script>
     document.getElementById("submitVoteButton").addEventListener("click", function() {
       const voterName = document.getElementById("voterName").value.trim();
-      const votes = {
-        name: voterName,
-        match1: document.querySelector('input[name="match1"]:checked')?.value,
-        match2: document.querySelector('input[name="match2"]:checked')?.value,
-        match3: document.querySelector('input[name="match3"]:checked')?.value,
-        match4: document.querySelector('input[name="match4"]:checked')?.value,
-        match5: document.querySelector('input[name="match5"]:checked')?.value,
-        match6: document.querySelector('input[name="match6"]:checked')?.value,
-        match7: document.querySelector('input[name="match7"]:checked')?.value,
-        match8: document.querySelector('input[name="match8"]:checked')?.value,
-        match9: document.querySelector('input[name="match9"]:checked')?.value,
-      };
-
-      // Validate that the name and all votes are provided
-      if (!voterName) {
-        alert("Ingresa tu nombre po");
-        return;
+      const votes = {"name": voterName};
+      const totalMatches = 15; // total de partidos
+      for (let i=1;i<=totalMatches;i++) {
+        const choice = document.querySelector('input[name="match'+i+'"]:checked');
+        votes['match'+i] = choice ? choice.value : undefined;
       }
-      if (Object.values(votes).some(vote => vote === undefined)) {
-        alert("Te faltan partidos por votar");
-        return;
-      }
-
-      // Send votes to Google Sheets
+      if (!voterName) { alert("Ingresa tu nombre 😅"); return; }
+      if (Object.values(votes).some(v => v === undefined)) { alert("Te faltan partidos por votar"); return; }
       fetch("https://script.google.com/macros/s/AKfycbx025trGaEMFhbkVtTIaDfb652XoiU22ycbEWTWkVhyUa7ykV5Z9__rIp6wZT6st3d2ig/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(votes),
+        method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body: JSON.stringify(votes)
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          alert("Thanks for voting!");
-        } else {
-          alert("There was an issue submitting your vote. Please try again.");
-        }
-      })
-      .catch(error => alert("Gracias por votar!"));
+      .then(() => alert("¡Votos enviados! Gracias 💙"))
+      .catch(() => alert("¡Votos enviados! Gracias 💙"));
     });
   </script>
-  <h2 class="center">Tendremos tremendas jugadoras</h2>
-  <div id="imageSection">
-    <img id="image" src="aleycata.JPG" alt="">
-  </div>
-  
-  <button id="selectButton">Escoge a una</button>
-
-  <div id="winnerMessage"></div>
-
-  <audio id="FiAudio" src="miau-triste.mp3"></audio>
-
-  <script>
-    var images = ["cata.jpg", "nieto.jpg", "fi.JPG", "barbi.jpg", "flo.jpg"];
-    var intervalId;
-    var winnerMessage = document.getElementById("winnerMessage");
-    var image = document.getElementById("image");
-    var selectButton = document.getElementById("selectButton");
-    var FiAudio = document.getElementById("FiAudio");
-
-    function changeImage() {
-      var randomIndex = Math.floor(Math.random() * images.length);
-      var randomImage = images[randomIndex];
-      image.src = randomImage;
-      image.alt = randomImage;
-    }
-
-    image.addEventListener("click", function() {
-      var winner = image.alt;
-      var winnerMessageText;
-      switch (winner) {
-        case "fi.JPG":
-          winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
-          FiAudio.play(); // Play the audio when Benja is selected
-          break;
-        case "cata.jpg":
-          winnerMessageText = "Escogiste a la Cata, la más linda <3";
-          break;
-        case "flo.jpg":
-          winnerMessageText = "Escogiste a la Flo, jugadora con mucha paciencia según la foto...";
-          break;
-        case "barbi.jpg":
-          winnerMessageText = "Escogiste a la Barbi, la que deja tatuajes sin ser tatuadora";
-          break;
-        default:
-          winnerMessageText = "¡Felicidades por tu elección!";
-      }
-      winnerMessage.textContent = winnerMessageText;
-    });
-
-    selectButton.addEventListener("click", function() {
-      var winner = image.alt;
-      var winnerMessageText;
-      switch (winner) {
-        case "fi.JPG":
-          winnerMessageText = "Escogiste a la Filomena, escucha atentamente el mensaje que tiene para ti";
-          FiAudio.play(); // Play the audio when Benja is selected
-          break;
-        case "cata.jpg":
-          winnerMessageText = "Escogiste a la Cata, la más linda <3";
-          break;
-        case "flo.jpg":
-          winnerMessageText = "Escogiste a la Flo, jugadora con mucha paciencia según la foto...";
-          break;
-        case "barbi.jpg":
-          winnerMessageText = "Escogiste a la Barbi, la que deja tatuajes sin ser tatuadora";
-          break;
-        default:
-          winnerMessageText = "¡Felicidades por tu elección!";
-      }
-      winnerMessage.textContent = winnerMessageText;
-      clearInterval(intervalId);
-    });
-
-    changeImage(); // Initial image change
-    intervalId = setInterval(changeImage, 500); // Change image every 2 seconds
-  </script>
-
 </body>
 </html>
