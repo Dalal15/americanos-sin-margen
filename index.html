@@ -229,7 +229,7 @@
       }
       if (!voterName) { alert("Ingresa tu nombre 😅"); return; }
       if (Object.values(votes).some(v => v === undefined)) { alert("Te faltan partidos por votar"); return; }
-      fetch("https://script.google.com/macros/s/AKfycbx025trGaEMFhbkVtTIaDfb652XoiU22ycbEWTWkVhyUa7ykV5Z9__rIp6wZT6st3d2ig/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwtF9QzOBwyUgEqEjLffuj6zVCfoKzUraqMRlYro_CK_ASVrsFXzf8QTwDkm09liZ-AyQ/exec", {
         method:"POST", mode:"no-cors", headers:{"Content-Type":"application/json"}, body: JSON.stringify(votes)
       })
       .then(() => alert("¡Votos enviados! Gracias 💙"))
@@ -268,7 +268,7 @@
     }
 
     // ============ Ranking de aciertos ============
-    const READ_URL = "https://script.google.com/macros/s/AKfycbye3ScyC7wJ1g6XIGNLiitAq7AT_pfMgYCx0h5h7jyB-Z4SCgsMKtav1HmYJn-LUcVi/exec"; // Reemplaza por tu doGet publicado
+    const READ_URL = "https://script.google.com/macros/s/AKfycbwtF9QzOBwyUgEqEjLffuj6zVCfoKzUraqMRlYro_CK_ASVrsFXzf8QTwDkm09liZ-AyQ/exec?mode=read"; // Reemplaza por tu doGet publicado
 
     async function fetchAllVotes(){
       const res = await fetch(READ_URL, {method:"GET", mode:"cors"});
