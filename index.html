@@ -31,11 +31,21 @@
   .time{font-family:monospace; background:#edf2ff; padding:2px 6px; border-radius:6px; border:1px solid #d9e3ff;}
   #rankingContainer table{width:100%; border-collapse:collapse; margin-top:8px;}
   #rankingContainer th, #rankingContainer td{padding:8px 10px; border-bottom:1px solid #eef2f7;}
+  .hidden{display:none;}
+  /* Carrusel */
+  .carousel {
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    background:#fff; padding:12px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    max-width:900px; margin:0 auto;
+  }
+  .carousel img { max-width:720px; max-height:420px; width:100%; height:auto; border-radius:8px; object-fit:cover; }
+  .carousel button{ padding:8px 12px; font-size:18px; border:none; border-radius:8px; background:var(--m3); color:#fff; cursor:pointer; }
+  .carousel button:hover{ filter:brightness(1.05); }
 </style>
 </head>
 <body>
   <header>
-    <img src="data:image/png;base64,{{LOGO_BASE64_AQUÍ}}" alt="M3 Logo">
+    <img src="data:image/png;base64,{{LOGO_BASE64_AQUI}}" alt="M3 Logo">
     <div>
       <h1>Americano M3 & Friends</h1>
       <div class="tag">Bienvenid@s y que gane la mejor ⚡</div>
@@ -49,6 +59,7 @@
 
   <input type="text" id="voterName" placeholder="Ingresa tu nombre" required />
 
+  <!-- Franjas y partidos -->
   <div class="round"><h2>Franja 18:05-18:30</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
@@ -196,8 +207,20 @@
 
   <button id="submitVoteButton">Enviar votos</button>
 
-  <!-- ===================== RESULTADOS REALES & RANKING ===================== -->
-  <section class="round" id="resultados-reales">
+  <!-- Carrusel de fotos debajo de los votos -->
+  <section class="round" id="galeria">
+    <h2>Galería</h2>
+    <div class="carousel">
+      <button id="prevPhoto" aria-label="Anterior">◀</button>
+      <img id="slidePhoto" src="" alt="foto" />
+      <button id="nextPhoto" aria-label="Siguiente">▶</button>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTADOS REALES & RANKING (OCULTOS POR CLAVE) ===================== -->
+  <button id="toggleResultadosBtn" style="margin-top:8px;">Mostrar resultados</button>
+
+  <section class="round hidden" id="resultados-reales">
     <h2>Cargar resultados reales</h2>
     <p>Una vez terminados los partidos, selecciona a la pareja ganadora en cada match y calcula el ranking.</p>
 
@@ -218,7 +241,7 @@
   </section>
 
   <script>
-    // ============ Envío de votos ============
+    /*********** Envío de votos ***********/
     document.getElementById("submitVoteButton").addEventListener("click", function() {
       const voterName = document.getElementById("voterName").value.trim();
       const votes = { "name": voterName };
@@ -236,7 +259,7 @@
       .catch(() => alert("¡Votos enviados! Gracias 💙"));
     });
 
-    // ============ Construir tabla de resultados reales ============
+    /*********** Construir tabla de resultados reales ***********/
     const TOTAL_MATCHES = 15;
 
     function getMatchOptions(i){
@@ -267,8 +290,8 @@
       }
     }
 
-    // ============ Ranking de aciertos ============
-    const READ_URL = "https://script.google.com/macros/s/AKfycbwtF9QzOBwyUgEqEjLffuj6zVCfoKzUraqMRlYro_CK_ASVrsFXzf8QTwDkm09liZ-AyQ/exec?mode=read"; // Reemplaza por tu doGet publicado
+    /*********** Ranking de aciertos (lectura) ***********/
+    const READ_URL = "https://script.google.com/macros/s/AKfycbwtF9QzOBwyUgEqEjLffuj6zVCfoKzUraqMRlYro_CK_ASVrsFXzf8QTwDkm09liZ-AyQ/exec?mode=read";
 
     async function fetchAllVotes(){
       const res = await fetch(READ_URL, {method:"GET", mode:"cors"});
@@ -333,8 +356,93 @@
       }
     });
 
-    // Init
+    // Inicializa la tabla de resultados reales
     buildResultadosTable();
+
+    /*********** Clave para mostrar/ocultar resultados ***********/
+    const ADMIN_CODE = "m3power"; // <-- cámbiala
+    function showResultados(){ document.getElementById('resultados-reales')?.classList.remove('hidden'); }
+    function hideResultados(){ document.getElementById('resultados-reales')?.classList.add('hidden'); }
+    hideResultados(); // oculto por defecto
+
+    document.getElementById('toggleResultadosBtn')?.addEventListener('click', ()=>{
+      const sec = document.getElementById('resultados-reales');
+      if (!sec) return;
+      // toggle si ya está visible
+      if (!sec.classList.contains('hidden')) { hideResultados(); return; }
+      // pedir clave si está oculto
+      const code = prompt("Ingresa la clave de admin:");
+      if (code && code === ADMIN_CODE) {
+        showResultados();
+      } else {
+        alert("Clave incorrecta.");
+      }
+    });
+
+    /*********** Carrusel (auto-descubrimiento pictures/photo1..photo30) ***********/
+    // Si prefieres lista manual, descomenta y rellena:
+    // const PHOTO_FILES = ["pictures/cata.jpg","pictures/barbi.jpg","pictures/flo.jpg"];
+    const PHOTO_FILES = [];
+    const MAX_PROBE = 30;
+    const EXTS = ["jpg","jpeg","png","webp"];
+    let pendingProbes = 0, anyFound = false;
+
+    function tryAdd(src, onDone){
+      const img = new Image();
+      img.onload = ()=>{ PHOTO_FILES.push(src); onDone(true); };
+      img.onerror = ()=> onDone(false);
+      img.src = src + (src.includes('?') ? '' : `?v=${Date.now()}`); // evita caché
+    }
+    function autoDiscoverPhotos(callback){
+      pendingProbes = 0; anyFound = false;
+      for (let i=1;i<=MAX_PROBE;i++){
+        for (const ext of EXTS){
+          const src = `pictures/photo${i}.${ext}`;
+          pendingProbes++;
+          tryAdd(src, (ok)=>{
+            if (ok) anyFound = true;
+            pendingProbes--;
+            if (pendingProbes===0) callback(anyFound);
+          });
+        }
+      }
+    }
+
+    const slide = document.getElementById('slidePhoto');
+    const prevBtn = document.getElementById('prevPhoto');
+    const nextBtn = document.getElementById('nextPhoto');
+    let idx = 0, timerId = null;
+
+    function showIdx(i){
+      if (!PHOTO_FILES.length) return;
+      idx = (i + PHOTO_FILES.length) % PHOTO_FILES.length;
+      slide.src = PHOTO_FILES[idx];
+    }
+    function startAuto(){
+      stopAuto();
+      timerId = setInterval(()=> showIdx(idx+1), 2500);
+    }
+    function stopAuto(){
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+    }
+
+    prevBtn?.addEventListener('click', ()=>{ stopAuto(); showIdx(idx-1); startAuto(); });
+    nextBtn?.addEventListener('click', ()=>{ stopAuto(); showIdx(idx+1); startAuto(); });
+
+    (function initGallery(){
+      if (PHOTO_FILES.length){
+        showIdx(0); startAuto();
+        return;
+      }
+      autoDiscoverPhotos((found)=>{
+        if (!found){
+          document.getElementById('galeria').classList.add('hidden');
+          return;
+        }
+        showIdx(0); startAuto();
+      });
+    })();
   </script>
 </body>
 </html>
