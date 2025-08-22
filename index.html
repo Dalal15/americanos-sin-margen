@@ -10,6 +10,7 @@
     --accent:#ffd400;
     --bg:#f6f8fb;
   }
+  *{box-sizing:border-box}
   body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:24px; background:var(--bg); color:#1f2d3d;}
   header{display:flex; align-items:center; gap:16px; justify-content:center; margin-bottom:16px;}
   header img{height:56px;}
@@ -28,11 +29,13 @@
   .match-label{display:flex; gap:16px; align-items:center;}
   .court{font-weight:600; color:#445; min-width:85px;}
   .time{font-family:monospace; background:#edf2ff; padding:2px 6px; border-radius:6px; border:1px solid #d9e3ff;}
+  #rankingContainer table{width:100%; border-collapse:collapse; margin-top:8px;}
+  #rankingContainer th, #rankingContainer td{padding:8px 10px; border-bottom:1px solid #eef2f7;}
 </style>
 </head>
 <body>
   <header>
-    <img src="m3-logo.png" alt="M3 Logo">
+    <img src="data:image/png;base64,{{LOGO_BASE64_AQUÍ}}" alt="M3 Logo">
     <div>
       <h1>Americano M3 & Friends</h1>
       <div class="tag">Bienvenid@s y que gane la mejor ⚡</div>
@@ -46,12 +49,7 @@
 
   <input type="text" id="voterName" placeholder="Ingresa tu nombre" required />
 
-  <!-- Franja 1 -->
-  <div class="round">
-    <h2>Franja 18:05-18:30</h2>
-    <table>
-      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
-
+  <div class="round"><h2>Franja 18:05-18:30</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
         <td><span class="time">18:05-18:30</span> — Coni Dalal <strong>vs</strong> Isa Dani Torres</td>
@@ -78,15 +76,9 @@
           <label class="match-label"><input type="radio" name="match3" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
-    </table>
-  </div>
+    </table></div>
 
-  <!-- Franja 2 -->
-  <div class="round">
-    <h2>Franja 18:35 - 19:00</h2>
-    <table>
-      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
-
+  <div class="round"><h2>Franja 18:35 - 19:00</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
         <td><span class="time">18:35 - 19:00</span> — Coni Dalal <strong>vs</strong> Vale H Isi</td>
@@ -113,15 +105,9 @@
           <label class="match-label"><input type="radio" name="match6" value="Nata Fi"> Nata Fi</label>
         </td>
       </tr>
-    </table>
-  </div>
+    </table></div>
 
-  <!-- Franja 3 -->
-  <div class="round">
-    <h2>Franja 19:05 - 19:30</h2>
-    <table>
-      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
-
+  <div class="round"><h2>Franja 19:05 - 19:30</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
         <td><span class="time">19:05 - 19:30</span> — Coni Dalal <strong>vs</strong> Cata Flo</td>
@@ -148,15 +134,9 @@
           <label class="match-label"><input type="radio" name="match9" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
-    </table>
-  </div>
+    </table></div>
 
-  <!-- Franja 4 -->
-  <div class="round">
-    <h2>Franja 19:35 - 20:00</h2>
-    <table>
-      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
-
+  <div class="round"><h2>Franja 19:35 - 20:00</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
         <td><span class="time">19:35 - 20:00</span> — Coni Dalal <strong>vs</strong> Nata Fi</td>
@@ -183,15 +163,9 @@
           <label class="match-label"><input type="radio" name="match12" value="Pia Mañi"> Pia Mañi</label>
         </td>
       </tr>
-    </table>
-  </div>
+    </table></div>
 
-  <!-- Franja 5 -->
-  <div class="round">
-    <h2>Franja 20:05 - 20:30</h2>
-    <table>
-      <tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
-
+  <div class="round"><h2>Franja 20:05 - 20:30</h2><table><tr><th>Cancha</th><th>Partido</th><th>Tu voto</th></tr>
       <tr>
         <td class="court">Cancha 1</td>
         <td><span class="time">20:05 - 20:30</span> — Coni Dalal <strong>vs</strong> Pia Mañi</td>
@@ -218,16 +192,37 @@
           <label class="match-label"><input type="radio" name="match15" value="Nata Fi"> Nata Fi</label>
         </td>
       </tr>
-    </table>
-  </div>
+    </table></div>
 
   <button id="submitVoteButton">Enviar votos</button>
 
+  <!-- ===================== RESULTADOS REALES & RANKING ===================== -->
+  <section class="round" id="resultados-reales">
+    <h2>Cargar resultados reales</h2>
+    <p>Una vez terminados los partidos, selecciona a la pareja ganadora en cada match y calcula el ranking.</p>
+
+    <table id="tablaResultados">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Partido</th>
+          <th>Ganadora real</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button id="btnCalcularGanadoras">Calcular ranking de aciertos</button>
+
+    <div id="rankingContainer" style="margin-top:18px;"></div>
+  </section>
+
   <script>
+    // ============ Envío de votos ============
     document.getElementById("submitVoteButton").addEventListener("click", function() {
       const voterName = document.getElementById("voterName").value.trim();
-      const votes = {"name": voterName};
-      const totalMatches = 15; // total de partidos
+      const votes = { "name": voterName };
+      const totalMatches = 15;
       for (let i=1;i<=totalMatches;i++) {
         const choice = document.querySelector('input[name="match'+i+'"]:checked');
         votes['match'+i] = choice ? choice.value : undefined;
@@ -240,6 +235,106 @@
       .then(() => alert("¡Votos enviados! Gracias 💙"))
       .catch(() => alert("¡Votos enviados! Gracias 💙"));
     });
+
+    // ============ Construir tabla de resultados reales ============
+    const TOTAL_MATCHES = 15;
+
+    function getMatchOptions(i){
+      const radios = document.querySelectorAll('input[name="match'+i+'"]');
+      const opts = Array.from(radios).map(r => r.value);
+      return opts.length === 2 ? opts : ["Opción A","Opción B"];
+    }
+
+    function buildResultadosTable(){
+      const tbody = document.querySelector("#tablaResultados tbody");
+      tbody.innerHTML = "";
+      for(let i=1;i<=TOTAL_MATCHES;i++){
+        const [optA,optB] = getMatchOptions(i);
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i}</td>
+          <td>${optA} <strong>vs</strong> ${optB}</td>
+          <td>
+            <label style="margin-right:12px;">
+              <input type="radio" name="real${i}" value="${optA}"> ${optA}
+            </label>
+            <label>
+              <input type="radio" name="real${i}" value="${optB}"> ${optB}
+            </label>
+          </td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    // ============ Ranking de aciertos ============
+    const READ_URL = "https://script.google.com/macros/s/AKfycbzQsaDXQ8fWS4sE6gdYYPPdEKYODl85uxOmySIBjGf9_CCG7JXBQC7dOxa5FJOkhA4fzg/exec"; // Reemplaza por tu doGet publicado
+
+    async function fetchAllVotes(){
+      const res = await fetch(READ_URL, {method:"GET", mode:"cors"});
+      if(!res.ok) throw new Error("No se pudo leer votos (GET)");
+      return await res.json();
+    }
+
+    function collectRealWinners(){
+      const real = {};
+      for(let i=1;i<=TOTAL_MATCHES;i++){
+        const ch = document.querySelector('input[name="real'+i+'"]:checked');
+        if(!ch) return null;
+        real['match'+i] = ch.value;
+      }
+      return real;
+    }
+
+    function scoreOne(voterObj, real){
+      let score = 0;
+      for(let i=1;i<=TOTAL_MATCHES;i++){
+        if(voterObj['match'+i] && voterObj['match'+i] === real['match'+i]) score++;
+      }
+      return score;
+    }
+
+    function renderRanking(rows){
+      const div = document.getElementById("rankingContainer");
+      if(!rows.length){ div.innerHTML = "<p>No hay votos registrados aún.</p>"; return; }
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <thead>
+          <tr><th>#</th><th>Nombre</th><th>Aciertos</th></tr>
+        </thead>
+        <tbody></tbody>
+      `;
+      const tb = table.querySelector("tbody");
+
+      rows.forEach((r,i)=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${i+1}</td><td>${r.name || "(sin nombre)"}</td><td>${r.score}</td>`;
+        tb.appendChild(tr);
+      });
+
+      const max = rows[0].score;
+      const ganadores = rows.filter(r => r.score === max).map(r => r.name || "(sin nombre)");
+      div.innerHTML = `<h3>Ranking</h3><p><strong>Ganador/a(s):</strong> ${ganadores.join(", ")} — ${max} aciertos</p>`;
+      div.appendChild(table);
+    }
+
+    document.getElementById("btnCalcularGanadoras").addEventListener("click", async ()=>{
+      const reales = collectRealWinners();
+      if(!reales){ alert("Te faltan resultados por marcar."); return; }
+      try{
+        const votos = await fetchAllVotes();
+        const scored = votos.map(v => ({...v, score: scoreOne(v, reales)}))
+                            .sort((a,b)=> b.score - a.score || (a.name||"").localeCompare(b.name||""));
+        renderRanking(scored);
+      }catch(err){
+        console.error(err);
+        alert("No pude leer los votos guardados. Revisa el endpoint READ_URL.");
+      }
+    });
+
+    // Init
+    buildResultadosTable();
   </script>
 </body>
 </html>
